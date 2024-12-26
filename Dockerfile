@@ -12,6 +12,13 @@ LABEL maintainer="thelamer"
 # title
 ENV TITLE=Spotube
 
+# Install necessary packages, e.g., JACK, and other audio libraries
+RUN apt-get update && apt-get install -y \
+    jackd2 \
+    pulseaudio \
+    alsa-utils \
+    && rm -rf /var/lib/apt/lists/*
+
 RUN \
   echo "**** add icon ****" && \
   curl -o \
