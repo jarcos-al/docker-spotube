@@ -19,6 +19,13 @@ RUN apt-get update && apt-get install -y \
     alsa-utils \
     && rm -rf /var/lib/apt/lists/*
 
+# Create a script to set ulimits and run the application
+COPY start.sh /usr/local/bin/start.sh
+RUN chmod +x /usr/local/bin/start.sh
+
+# Default command to run the application
+CMD ["/usr/local/bin/start.sh", "jackd", "-d", "alsa"]
+
 RUN \
   echo "**** add icon ****" && \
   curl -o \
