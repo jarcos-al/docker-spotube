@@ -1,0 +1,23 @@
+services:
+  spotube:
+    image: ghcr.io/jarcos-al/docker-spotube:sha256-865e1d0a2bf58156ec63f04433e8de8ab072ee060a1d5d951c45075de1192ea8
+    container_name: spotube-container
+    privileged: true
+    ulimits: 
+      rtprio: 
+        soft: 99
+        hard: 99
+      memlock:
+        soft: -1
+        hard: -1
+    ports:
+      - 3431:3000
+    restart: on-failure:5
+    volumes:
+      - ./config:/config
+      - /dev/snd:/dev/snd
+    environment:
+      TZ: Europe/Bucharest
+      PUID: 1026
+      PGID: 100
+    command: ["/usr/local/bin/start.sh", "jackd", "-d", "alsa"]
